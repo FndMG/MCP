@@ -4,6 +4,10 @@ import logging
 
 from tools.template import TemplateTools
 
+from config.config import Config
+
+Config.init() 
+
 mcp = FastMCP(
     name="mcp-api-wrapper",
     instructions="""
