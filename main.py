@@ -12,7 +12,6 @@ mcp = FastMCP(
     name="mcp-api-wrapper",
     instructions="""
 Use these APIs to support users.
-If required parameters are missing, ask the user for them.
 """
 )
 

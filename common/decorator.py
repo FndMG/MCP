@@ -4,7 +4,7 @@ import inspect
 
 def log_function_call(func):
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs):
         func_name = func.__name__
 
         sig = inspect.signature(func)
@@ -26,6 +26,6 @@ def log_function_call(func):
 
         logging.info(f"Request received: {func_name}({', '.join(log_arg_list)})")
 
-        return func(*args, **kwargs)
+        return await func(*args, **kwargs)
 
     return wrapper

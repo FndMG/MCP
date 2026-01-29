@@ -152,3 +152,4 @@ cython_debug/
 *.swo
 
 *.Identifier
+.ruff_cache
