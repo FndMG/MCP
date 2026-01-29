@@ -47,7 +47,7 @@ def call_api(api_url: str, params: Dict[str, Any] = None, http_method: str = "GE
             params=params if http_method == "GET" or http_method == "DELETE" else None,
             json=params if http_method in ["POST", "PUT", "PATCH"] else None,
             cookies=None,
-            headers=None,
+            headers=None,  # TODO: Implement authentication headers
             timeout=Config.TIME_OUT_SECONDS,
         )
 
