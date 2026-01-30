@@ -115,6 +115,57 @@ async def get_template_detail(template_id: int):
     return templates[template_id]
 
 
+# --- System2: User endpoints ---
+
+@app.get("/users")
+async def get_users():
+    """Get user list."""
+    await check_busy()
+    return {
+        "user_list": [
+            {
+                "user_id": 1,
+                "name": "Alice",
+                "email": "alice@example.com",
+                "role": "admin"
+            },
+            {
+                "user_id": 2,
+                "name": "Bob",
+                "email": "bob@example.com",
+                "role": "member"
+            }
+        ]
+    }
+
+@app.get("/users/{user_id}")
+async def get_user_detail(user_id: int):
+    """Get user detail."""
+    await check_busy()
+
+    users = {
+        1: {
+            "user_id": 1,
+            "name": "Alice",
+            "email": "alice@example.com",
+            "role": "admin"
+        },
+        2: {
+            "user_id": 2,
+            "name": "Bob",
+            "email": "bob@example.com",
+            "role": "member"
+        }
+    }
+
+    if user_id not in users:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return users[user_id]
+
+
+# --- Common endpoints ---
+
 @app.get("/login")
 async def login():
     """Login endpoint."""

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class ApiEndpoints:
+class System1Endpoints:
     PROTOCOL = getenv("PROTOCOL", "http")
     API_HOST_NAME = getenv("API_HOST_NAME")
     API_PATH = getenv("API_PATH")

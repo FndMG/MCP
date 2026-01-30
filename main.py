@@ -1,8 +1,8 @@
 from fastmcp import FastMCP
-from os import getenv
 import logging
 
-from tools.template import TemplateTools
+from tools.system1.template import TemplateTools
+from tools.system2.user import UserTools
 
 from config.config import Config
 
@@ -15,7 +15,7 @@ Use these APIs to support users.
 """
 )
 
-TOOL_CLASSES = [TemplateTools]
+TOOL_CLASSES = [TemplateTools, UserTools]
 
 for tool_class in TOOL_CLASSES:
     instance = tool_class()

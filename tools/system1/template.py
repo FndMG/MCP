@@ -1,7 +1,8 @@
 from core.call_api import call_api
 from common.decorator import log_function_call
 from tools.toolbase import ToolsBase, tool
-from config.endpoint import ApiEndpoints
+from config.endpoints.system1 import System1Endpoints
+
 
 class TemplateTools(ToolsBase):
     @log_function_call
@@ -13,7 +14,7 @@ class TemplateTools(ToolsBase):
         Returns:
             TemplateList
         """
-        result = await call_api(http_method="GET", api_url=ApiEndpoints.TEMPLATE_LIST_URL)
+        result = await call_api(http_method="GET", api_url=System1Endpoints.TEMPLATE_LIST_URL)
         return result
 
     @log_function_call
@@ -28,6 +29,6 @@ class TemplateTools(ToolsBase):
         Returns:
             TemplateDetail
         """
-        url = f"{ApiEndpoints.TEMPLATE_DETAIL_URL}/{template_id}"
+        url = f"{System1Endpoints.TEMPLATE_DETAIL_URL}/{template_id}"
         result = await call_api(http_method="GET", api_url=url)
         return result
