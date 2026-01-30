@@ -11,6 +11,7 @@ class Config:
     LOG_MAX_BYTES = int(getenv("LOG_MAX_BYTES", "10485760"))
     LOG_BACKUP_COUNT = int(getenv("LOG_BACKUP_COUNT", "5"))
     TIME_OUT_SECONDS = int(getenv("TIME_OUT_SECONDS", "600"))
+    API_MAX_CONCURRENT = int(getenv("API_MAX_CONCURRENT", "5"))
     API_ACCESS_TOKEN = getenv("API_ACCESS_TOKEN")
     API_SECRET_KEY = getenv("API_SECRET_KEY")
 

@@ -1,8 +1,11 @@
+import asyncio
 import httpx
 import logging
 import json
 from typing import Dict, Any
 from config.config import Config
+
+_api_semaphore = asyncio.Semaphore(Config.API_MAX_CONCURRENT)
 
 def log_requests_and_response(response: httpx.Response):
     try:
@@ -41,19 +44,25 @@ async def call_api(api_url: str, params: Dict[str, Any] = None, http_method: str
     try:
         http_method = http_method.upper()
 
-        async with httpx.AsyncClient(timeout=Config.TIME_OUT_SECONDS) as client:
-            response = await client.request(
-                http_method,
-                api_url,
-                params=params if http_method == "GET" or http_method == "DELETE" else None,
-                json=params if http_method in ["POST", "PUT", "PATCH"] else None,
-                cookies=None,
-                headers=None, #TODO: 未実装
-            )
+        async with _api_semaphore:
+            async with httpx.AsyncClient(timeout=Config.TIME_OUT_SECONDS) as client:
+                response = await client.request(
+                    http_method,
+                    api_url,
+                    params=params if http_method == "GET" or http_method == "DELETE" else None,
+                    json=params if http_method in ["POST", "PUT", "PATCH"] else None,
+                    cookies=None,
+                    headers=None, #TODO: not implemented
+                )
 
-        log_requests_and_response(response)
-        response.raise_for_status()
-        return response.json()
+            log_requests_and_response(response)
+            response.raise_for_status()
+            return response.json()
+
+    except httpx.HTTPStatusError as e:
+        error_message = f"API HTTP error ({api_url}): {e.response.status_code} {e.response.reason_phrase}"
+        logging.error(error_message)
+        return {"status": "error", "message": error_message}
 
     except httpx.RequestError as e:
         error_message = f"API request error ({api_url}): {e}"
